@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing import image_dataset_from_directory
 DATA_DIR = "./data"
 
 
-def load_datasets(img_size=128, batch_size=32, seed=42, num_classes=None):
+def load_datasets(img_size=128, batch_size=32, seed=42):
     """
     Load train, validation and test datasets from data directory.
     
@@ -17,7 +17,6 @@ def load_datasets(img_size=128, batch_size=32, seed=42, num_classes=None):
         img_size: Size of images (height, width)
         batch_size: Batch size for training
         seed: Random seed for reproducibility
-        num_classes: Number of classes (for label_mode)
     
     Returns:
         train_ds, val_ds, test_ds, class_names

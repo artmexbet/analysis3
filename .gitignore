@@ -51,6 +51,5 @@ Thumbs.db
 # UV
 .uv/
 
-# TensorFlow
+# TensorFlow saved models (outside models/ directory)
 *.h5
-*.keras
