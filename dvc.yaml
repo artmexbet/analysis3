@@ -1,0 +1,51 @@
+stages:
+  cnn:
+    cmd: python cnn_model.py
+    deps:
+      - cnn_model.py
+      - data_loader.py
+      - data
+    params:
+      - seed
+      - img_size
+      - batch_size
+      - cnn.epochs
+    outs:
+      - models/cnn.keras
+    metrics:
+      - cnn.json:
+          cache: false
+
+  vgg:
+    cmd: python vgg_model.py
+    deps:
+      - vgg_model.py
+      - data_loader.py
+      - data
+    params:
+      - seed
+      - img_size
+      - batch_size
+      - vgg.epochs
+    outs:
+      - models/vgg.keras
+    metrics:
+      - vgg.json:
+          cache: false
+
+  efficientnet:
+    cmd: python efficientnet_model.py
+    deps:
+      - efficientnet_model.py
+      - data_loader.py
+      - data
+    params:
+      - seed
+      - img_size
+      - batch_size
+      - efficientnet.epochs
+    outs:
+      - models/efficientnet.keras
+    metrics:
+      - efficientnet.json:
+          cache: false
