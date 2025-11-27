@@ -1,0 +1,7 @@
+seed: 123
+cnn:
+  epochs: 1
+mobilenet:
+  epochs: 1
+resnet:
+  epochs: 1

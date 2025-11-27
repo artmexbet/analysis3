@@ -1,0 +1,37 @@
+stages:
+  cnn:
+    cmd: uv run cnn.py
+    deps:
+    - cnn.py
+    - ignored/data
+    params:
+    - cnn.epochs
+    - seed
+    outs:
+    - ignored/models/cnn.h5
+    metrics:
+    - cnn.json
+  mobilenet:
+    cmd: uv run mobilenet.py
+    deps:
+    - ignored/data
+    - mobilenet.py
+    params:
+    - mobilenet.epochs
+    - seed
+    outs:
+    - ignored/models/mobilenet.h5
+    metrics:
+    - mobilenet.json
+  resnet:
+    cmd: uv run resnet.py
+    deps:
+    - ignored/data
+    - resnet.py
+    params:
+    - resnet.epochs
+    - seed
+    outs:
+    - ignored/models/resnet.h5
+    metrics:
+    - resnet.json
