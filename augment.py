@@ -1,5 +1,5 @@
 """
-Data augmentation script for butterfly classification.
+Data augmentation script for food vs non-food classification.
 Creates augmented copies of training images.
 """
 import os
@@ -9,8 +9,8 @@ from tensorflow import keras
 from tensorflow.keras import layers
 
 # Configuration
-SRC_DIR = "./data/train"
-OUT_DIR = "./data/train"
+SRC_DIR = "./data/training"
+OUT_DIR = "./data/training"
 IMG_SIZE = 128
 AUG_PER_IMAGE = 1
 SEED = 42

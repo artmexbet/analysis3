@@ -1,5 +1,5 @@
 """
-EfficientNet-based model for butterfly classification using transfer learning.
+EfficientNet-based model for food vs non-food classification using transfer learning.
 """
 import json
 import os
@@ -27,8 +27,6 @@ train_ds, val_ds, test_ds, class_names = load_datasets(
     seed=SEED,
 )
 
-num_classes = len(class_names)
-print(f"Number of classes: {num_classes}")
 print(f"Class names: {class_names}")
 
 # Load pre-trained EfficientNetB0 model without top layers
@@ -49,15 +47,15 @@ x = base_model(inputs, training=False)
 x = layers.GlobalAveragePooling2D()(x)
 x = layers.Dense(128, activation="relu")(x)
 x = layers.Dropout(0.3)(x)
-outputs = layers.Dense(num_classes, activation="softmax")(x)
+outputs = layers.Dense(1, activation="sigmoid")(x)
 
 model = keras.Model(inputs, outputs)
 
 # Compile model
 model.compile(
-    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
-    loss="categorical_crossentropy",
-    metrics=["accuracy"],
+    optimizer=keras.optimizers.Adam(learning_rate=1e-4),
+    loss="binary_crossentropy",
+    metrics=["accuracy", keras.metrics.AUC(name="auc")],
 )
 
 model.summary()
@@ -70,12 +68,17 @@ history = model.fit(
 )
 
 # Evaluate on test set
-loss, accuracy = model.evaluate(test_ds)
+loss, accuracy, auc = model.evaluate(test_ds)
 print(f"Test loss: {loss:.4f}")
 print(f"Test accuracy: {accuracy:.4f}")
+print(f"Test AUC: {auc:.4f}")
 
 # Save metrics
-metrics = {"loss": float(loss), "accuracy": float(accuracy)}
+metrics = {
+    "loss": float(loss),
+    "accuracy": float(accuracy),
+    "auc": float(auc),
+}
 with open("efficientnet.json", "w") as f:
     json.dump(metrics, f, indent=2)
 

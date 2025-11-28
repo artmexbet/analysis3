@@ -42,3 +42,64 @@
 экспериментов. Допускается использование других инструментов
 (рассмотренных в лекции или найденных самостоятельно студентом),
 позволяющих выполнить все поставленные задачи.
+
+# Food vs Non-Food Classification Pipeline
+
+## Overview
+Проект демонстрирует MLOps-подход для задачи бинарной классификации изображений (еда против не еды). Вся логика описана в Python-скриптах, а воспроизводимость обеспечивается DVC-пайплайном, который запускает обучение трёх моделей (простая CNN, VGG16, EfficientNetB0) и сохраняет их метрики и веса.
+
+## Repository Structure
+```
+.
+├── augment.py              # Скрипт аугментации: дополняет data/training
+├── data_loader.py          # Единая точка загрузки train/val/test датасетов
+├── cnn_model.py            # Базовая сверточная сеть
+├── vgg_model.py            # Трансфер-обучение VGG16
+├── efficientnet_model.py   # Трансфер-обучение EfficientNetB0
+├── params.yaml             # Общие гиперпараметры (размеры, эпохи)
+├── dvc.yaml                # DVC-пайплайн из трех стадий
+├── models/*.keras          # Сохраненные модели
+├── *.json                  # Метрики качества для каждой модели
+└── data/                   # Структура data/{training,validation,evaluation}/{food,non_food}
+```
+
+## Dataset
+- Ожидается структура `data/training`, `data/validation`, `data/evaluation` с подпапками `food` и `non_food`.
+- Для тестирования можно использовать любой датасет food vs non-food (например, [Food vs Non-Food Image Dataset на Kaggle](https://www.kaggle.com/datasets/emrahcankaya/food-vs-nonfood-image-dataset)). Скачанные данные поместите в `data/` согласно структуре выше.
+- `augment.py` позволяет расширить `data/training` аугментированными изображениями. По умолчанию он создает по одной синтетической копии на исходное изображение и сохраняет рядом с оригиналами.
+
+## Setup
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e .
+```
+Требуются Python ≥ 3.10, TensorFlow ≥ 2.15, DVC ≥ 3.50 (см. `pyproject.toml`).
+
+## Running Experiments
+1. **Подготовьте данные**: убедитесь, что `data/` содержит указанные подкаталоги.
+2. **(Опционально) Аугментация**:
+   ```bash
+   python augment.py
+   ```
+3. **Запустите пайплайн**:
+   ```bash
+   dvc repro
+   ```
+   DVC выполнит все зависимости, перезапустит обучение при изменении кода, данных или параметров и сохранит модели в `models/`.
+
+## DVC Pipeline
+| Stage        | Command                      | Outputs             | Metrics        |
+|--------------|------------------------------|---------------------|----------------|
+| `cnn`        | `python cnn_model.py`        | `models/cnn.keras`  | `cnn.json`     |
+| `vgg`        | `python vgg_model.py`        | `models/vgg.keras`  | `vgg.json`     |
+| `efficientnet` | `python efficientnet_model.py` | `models/efficientnet.keras` | `efficientnet.json` |
+
+Все стадии используют `data_loader.py`, директорию `data/` и параметры из `params.yaml` (seed, размер изображений, batch size, число эпох).
+
+## Models
+- **CNN** (`cnn_model.py`): небольшая сеть из трех блоков Conv/MaxPool + полносвязные слои, обучаемая с нуля, оптимизатор Adam, функция потерь `binary_crossentropy`.
+- **VGG16** (`vgg_model.py`): использует предобученную `keras.applications.VGG16` без верхних слоёв, добавляет глобальный пуллинг и две Dense-головы, обучается только «голова» (бэкенд заморожен), оптимизатор Adam c lr=1e-4.
+- **EfficientNetB0** (`efficientnet_model.py`): аналогичная схема трансфер-обучения, но с базой EfficientNetB0 и GlobalAveragePooling2D.
+
+Каждое обучение выводит метрики (`accuracy`, `auc`, `loss`) в соответствующий JSON-файл и сохраняет веса в `models/`. DVC позволяет сравнивать результаты между прогонами и отслеживать изменения в коде, данных и гиперпараметрах.

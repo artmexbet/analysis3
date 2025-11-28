@@ -32,8 +32,8 @@ venv/
 ENV/
 env/
 
-# DVC
-/dvc.lock
+## DVC
+#/dvc.lock
 
 # IDE
 .idea/
