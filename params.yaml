@@ -1,0 +1,12 @@
+seed: 42
+img_size: 128
+batch_size: 32
+
+cnn:
+  epochs: 5
+
+vgg:
+  epochs: 5
+
+efficientnet:
+  epochs: 5

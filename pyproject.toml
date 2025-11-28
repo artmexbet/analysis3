@@ -1,0 +1,13 @@
+[project]
+name = "butterfly-classification"
+version = "0.1.0"
+description = "ML pipeline for butterfly species classification"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "dvc>=3.50.0",
+    "tensorflow>=2.15.0",
+    "pillow>=10.0.0",
+    "numpy>=1.24.0",
+    "pyyaml>=6.0",
+]
