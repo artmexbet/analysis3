@@ -53,3 +53,4 @@ Thumbs.db
 
 # TensorFlow saved models (outside models/ directory)
 *.h5
+/data

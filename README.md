@@ -103,3 +103,17 @@ pip install -e .
 - **EfficientNetB0** (`efficientnet_model.py`): аналогичная схема трансфер-обучения, но с базой EfficientNetB0 и GlobalAveragePooling2D.
 
 Каждое обучение выводит метрики (`accuracy`, `auc`, `loss`) в соответствующий JSON-файл и сохраняет веса в `models/`. DVC позволяет сравнивать результаты между прогонами и отслеживать изменения в коде, данных и гиперпараметрах.
+
+## Experimental Results
+| Model         | Dataset            | Loss  | Accuracy | AUC   |
+|---------------|--------------------|-------|----------|-------|
+| CNN           | baseline            | 0.335 | 0.890    | 0.944 |
+| CNN           | augmented           | 0.408 | 0.860    | 0.940 |
+| VGG16         | baseline            | 0.138 | 0.962    | 0.990 |
+| VGG16         | augmented           | 0.144 | 0.968    | 0.987 |
+| EfficientNetB0| baseline            | 0.060 | 0.980    | 0.998 |
+| EfficientNetB0| augmented           | 0.053 | 0.982    | 0.999 |
+
+- Базовая серия (без аугментации) зафиксирована в `*.no_augmentation.json` и помечена тегом `baseline-no-augmentation`.
+- Текущая HEAD содержит результаты на расширенном датасете (`*.json`).
+- Для сравнения версий можно использовать `dvc metrics diff --targets cnn.json vgg.json efficientnet.json` или переключаться между состояниями Git (`git checkout baseline-no-augmentation`).

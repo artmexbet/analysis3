@@ -1,0 +1,95 @@
+schema: '2.0'
+stages:
+  cnn:
+    cmd: python cnn_model.py
+    deps:
+    - path: cnn_model.py
+      hash: md5
+      md5: a42d7b109a11c3fcb8d69736cadf2c15
+      size: 2168
+    - path: data
+      hash: md5
+      md5: 7cd0ab45b65fe2fa315897cb11e3d467.dir
+      size: 467755114
+      nfiles: 19999
+    - path: data_loader.py
+      hash: md5
+      md5: a20da1e1df153633cc050a87db733da4
+      size: 2062
+    params:
+      params.yaml:
+        batch_size: 32
+        cnn.epochs: 5
+        img_size: 128
+        seed: 42
+    outs:
+    - path: cnn.json
+      hash: md5
+      md5: 5eae98eb67086f2776bae4bc7bfa1853
+      size: 100
+    - path: models/cnn.keras
+      hash: md5
+      md5: b57dfb317fabe8125f2f5d2a70a83068
+      size: 51507651
+  vgg:
+    cmd: python vgg_model.py
+    deps:
+    - path: data
+      hash: md5
+      md5: 7cd0ab45b65fe2fa315897cb11e3d467.dir
+      size: 467755114
+      nfiles: 19999
+    - path: data_loader.py
+      hash: md5
+      md5: a20da1e1df153633cc050a87db733da4
+      size: 2062
+    - path: vgg_model.py
+      hash: md5
+      md5: 37e29c8ffb03e87c0ad271ae0a76bcc6
+      size: 2163
+    params:
+      params.yaml:
+        batch_size: 32
+        img_size: 128
+        seed: 42
+        vgg.epochs: 5
+    outs:
+    - path: models/vgg.keras
+      hash: md5
+      md5: 58a7da548f5b004e6f839a1843fa3f6f
+      size: 59746920
+    - path: vgg.json
+      hash: md5
+      md5: b2ad35f83b8dee07aa7d4fe1b73b252c
+      size: 100
+  efficientnet:
+    cmd: python efficientnet_model.py
+    deps:
+    - path: data
+      hash: md5
+      md5: 7cd0ab45b65fe2fa315897cb11e3d467.dir
+      size: 467755114
+      nfiles: 19999
+    - path: data_loader.py
+      hash: md5
+      md5: a20da1e1df153633cc050a87db733da4
+      size: 2062
+    - path: efficientnet_model.py
+      hash: md5
+      md5: d91f6228e532878be2718407c489259c
+      size: 2213
+    params:
+      params.yaml:
+        batch_size: 32
+        efficientnet.epochs: 5
+        img_size: 128
+        seed: 42
+    outs:
+    - path: efficientnet.json
+      hash: md5
+      md5: ee890dd91815b449d8d903c9f8cc2e14
+      size: 100
+    - path: models/efficientnet.keras
+      hash: md5
+      md5: 33f4515d3037de899ba0f2791d3b37e4
+      size: 19018306

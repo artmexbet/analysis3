@@ -12,7 +12,7 @@ from tensorflow.keras import layers
 SRC_DIR = "./data/training"
 OUT_DIR = "./data/training"
 IMG_SIZE = 128
-AUG_PER_IMAGE = 1
+AUG_PER_IMAGE = 2  # Increased from 1 to 2 for more augmentation
 SEED = 42
 
 # Augmentation pipeline
