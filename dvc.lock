@@ -9,9 +9,9 @@ stages:
       size: 2168
     - path: data
       hash: md5
-      md5: 840fdb9a23c98313dde45246036c291f.dir
-      size: 452697142
-      nfiles: 5000
+      md5: 315b843b34bcf23704926d3b2938d0ae.dir
+      size: 470635425
+      nfiles: 8000
     - path: data_loader.py
       hash: md5
       md5: a20da1e1df153633cc050a87db733da4
@@ -25,20 +25,20 @@ stages:
     outs:
     - path: cnn.json
       hash: md5
-      md5: ea224857947c6143ba2d5395d6d1a9a8
-      size: 100
+      md5: deea56266754c39f8f4ed49158db2233
+      size: 98
     - path: models/cnn.keras
       hash: md5
-      md5: 587d61bd6f8b944a7302816a3f0a97fd
+      md5: c47aac66305a92ab03e05a5b9ab496d0
       size: 51507651
   vgg:
     cmd: python vgg_model.py
     deps:
     - path: data
       hash: md5
-      md5: 840fdb9a23c98313dde45246036c291f.dir
-      size: 452697142
-      nfiles: 5000
+      md5: 315b843b34bcf23704926d3b2938d0ae.dir
+      size: 470635425
+      nfiles: 8000
     - path: data_loader.py
       hash: md5
       md5: a20da1e1df153633cc050a87db733da4
@@ -56,20 +56,20 @@ stages:
     outs:
     - path: models/vgg.keras
       hash: md5
-      md5: 3f636df40743798085b75543992d0364
+      md5: dc0bee017b9d7ac4104e0a9c459851e8
       size: 59746920
     - path: vgg.json
       hash: md5
-      md5: 09dde9d719f9cb321fe232e270282b16
+      md5: 26a02ed44d78692967959bd46269efb4
       size: 99
   efficientnet:
     cmd: python efficientnet_model.py
     deps:
     - path: data
       hash: md5
-      md5: 840fdb9a23c98313dde45246036c291f.dir
-      size: 452697142
-      nfiles: 5000
+      md5: 315b843b34bcf23704926d3b2938d0ae.dir
+      size: 470635425
+      nfiles: 8000
     - path: data_loader.py
       hash: md5
       md5: a20da1e1df153633cc050a87db733da4
@@ -87,9 +87,9 @@ stages:
     outs:
     - path: efficientnet.json
       hash: md5
-      md5: 68596e3cc3114749b9f87313d3e93ac5
-      size: 100
+      md5: 009de04ba4a60e15b17115ab384530c0
+      size: 101
     - path: models/efficientnet.keras
       hash: md5
-      md5: e321e695ae9cec977449ea0d6f97db69
+      md5: 4d8cdac32565892a112d678ed417a0e9
       size: 19018306
